@@ -1,0 +1,50 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}{{form.title}}{% endblock%}
+
+{% block body %}
+<div class="sign_up">
+    <h1> {{form.title}}</h1>
+            <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.Category %}
+            <div class="form_field">
+                <label>Category</label><br>
+                {{form.Category}}
+            </div>
+            {% endif %}
+            <div class="form_field">
+                <label>Name</label><br>
+                {{ form.name }}
+
+            </div>
+            <div class="form_field">
+                <label>Price</label><br>
+                {{form.price}}
+            </div>
+            <div class="form_field">
+                <label>Description</label><br>
+                {{form.description}}
+            </div>
+            <div class="form_field">
+                <label>Product Image</label><br>
+                {{form.image}}
+            </div>
+            {% if form.is_sold %}
+            <div class="form_field">
+                <label>Is_Sold</label>
+                {{form.is_sold}}
+            </div>
+            {% endif %}           
+            {% if form.error or form.non_error_field %}
+            <div class="form_err">
+                {% for field in form %}
+                {{field.error}}
+                {% endfor %}
+                {{ form.non_error_field }}
+            </div>
+            {% endif %}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}

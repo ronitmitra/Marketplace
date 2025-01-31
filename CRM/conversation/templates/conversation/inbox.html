@@ -1,0 +1,24 @@
+{% extends 'home/layout.html' %}
+{% block title %}Inbox{% endblock %}
+{% block body %}
+<div style="width: 50%; background-color: gray;margin:8px auto; padding: 10px;">
+    {% for conversation in conversations %}
+    <a href="{% url 'conversation:detail' conversation.id %}" style="text-decoration: none;color: white;font-weight: bold;font-size: 1rem;">
+        <div style="display: flex;justify-content: center;align-items: center; width: 70%; box-shadow: 2px 2px 2px gray;">
+        <div style="width: 50%;">
+            <img style="width:30%;" src="{{conversation.item.image.url}}"/>
+        </div>
+        <div>
+            {% for member in conversation.member.all %}
+                <p>{{request.user|capfirst}}</p>
+                {% if member != request.user %}
+                    <p>{{member.username|capfirst}} | {{conversation.modified_at}}</p>
+                    <p>{{conversation.item.name}}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    </a>   
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'home/layout.html' %}
+{% block title %}Browse Items{% endblock %}
+
+{% block body %}
+<div class="item_container">
+    <div class="sidebar">
+       <form method="get" action="{% url 'items:items' %}">
+        <input style="width: 80%; padding: 10px; border: none; border-radius: 5px; margin:5px;" type="text" placeholder="Search for ..." name="query" value="{{query}}"><br>
+        <button style="background-color: aquamarine; color: White; font-weight: bold; width:30%; border:none;
+        padding:10px; font-size: 0.8rem; border-radius: 5px;margin-left: 3px;">Search</button>
+       </form>
+       <hr style="margin-top: 10px;">
+       <h3 style="color: white;">Categories</h3>
+       <ul>
+        {% for category in categories %}
+            <li class="{% if category.id == category_id %} active_category {% else %}non_active{% endif %}">
+                <a style="text-decoration: none; color: white; font-weight: bold;"href="{% url 'items:items' %}?query={{query}}&Category={{category.id}}">{{category.name}}                 
+                </a>
+            </li>
+        {% endfor %}
+       </ul>
+       <hr style="margin-top: 10px;">
+       <ul style="margin-top: 1rem;">
+        <li>
+            <a href="{% url 'items:items' %}" ><button style="background-color:rgb(46, 175, 57); padding: 10px; border-radius: 5px; text-decoration: none; color: white; font-weight: bold;width:100px; border: none;"> Clear</button></a>
+        </li>
+       </ul>
+
+    </div>
+
+    <div class="item_bar">
+        <h2>My Items</h2>
+        <div class="item_flex">
+            {% for item in items %}
+            <div class="item_browse">
+                <a href="{% url 'items:detail' item.id %}">
+                    <div>
+                        <img src="{{item.image.url}}">
+                    </div>    
+                    <div>
+                        <h3>{{item.name}}</h3>
+                        <p>Price : {{item.price}}</p>
+                    </div>            
+                </a>
+            </div>
+    
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

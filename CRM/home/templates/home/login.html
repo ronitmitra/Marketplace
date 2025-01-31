@@ -1,0 +1,29 @@
+{% extends 'home/layout.html' %}
+{% block title %} Log in {% endblock %}
+
+{% block body %}
+<div class="sign_up">
+    <h2 style="text-align: center;">Login Form</h2>
+    <form action="." method="post">
+        {% csrf_token %}
+        <div class="form_field">
+            <label>Username</label><br>
+            {{form.username}}
+        </div>
+        <div class="form_field">
+            <label>Password</label><br>
+            {{form.password}}
+        </div>
+        {% if form.error or form.non_field_error %}
+        <div class="form_err">
+            {% for field in form%}
+            {{field.error}}
+            {% endfor %}
+            {{form.non_field_error}}
+        </div>
+        {% endif %}
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

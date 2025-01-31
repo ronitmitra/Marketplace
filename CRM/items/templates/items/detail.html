@@ -1,0 +1,47 @@
+{% extends 'home/layout.html' %}
+{% block title %}{{item.name}}{% endblock %}
+
+{% block body %}
+<div class = "detail_container">
+    <div class="img_detail">
+        <img src="{{item.image.url}}"/>
+    </div>
+    <div class="detail">
+        <h3>{{item.name}}</h3>
+        <p>Price: {{item.price}}</p>
+        <p>Seller Name : {{item.created_by.username}}</p>
+        <p>Description : {{item.description}}</p>
+        {% if request.user == item.created_by %}
+        <div>
+            <p>This is Your Item</p>
+            <a href="{% url 'items:edit' item.id %}"><button style="background-color: green; color: white; width:5rem;">Edit</button></a>
+            <a href="{% url 'items:delete' item.id %}"><button style="background-color: red; color: white; width:5rem;">Delete</button></a>        
+        {% else%}
+            <a href="{% url 'conversation:new' item.id %}"><button>Contact Seller</button></a>
+        {% endif %}
+        </div>
+        
+    </div>
+    
+</div>
+
+<div class="container">
+    <h2>Related Items</h2>
+    <div class="item_content">
+        {% for item in related_item %}
+        <div class="item_detail">
+            <a href="{% url 'items:detail' item.id %}">
+                <div>
+                    <img src="{{item.image.url}}">
+                </div>    
+                <div>
+                    <h3>{{item.name}}</h3>
+                    <p>Price : {{item.price}}</p>
+                </div>            
+            </a>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
